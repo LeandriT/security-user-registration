@@ -1,0 +1,22 @@
+app:
+  name: spring boot application
+spring:
+  security:
+    jwt:
+      sign: super-secret-sign
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+  h2:
+    console:
+      enabled: 'true'
+      path: /h2
+  datasource:
+    username: h2
+    url: jdbc:h2:mem:user
+    password: h2
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: 'true'
+    database-platform: org.hibernate.dialect.H2Dialect
+

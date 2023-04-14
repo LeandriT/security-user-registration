@@ -1,0 +1,97 @@
+plugins {
+    id 'java'
+    id 'jacoco'
+    id 'org.springframework.boot' version '3.0.5'
+    id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'com.security.user-registration'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'com.h2database:h2'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+    implementation 'org.springframework.security:spring-security-crypto:6.0.2'
+    implementation 'com.auth0:java-jwt:4.4.0'
+    testImplementation 'com.github.javafaker:javafaker:1.0.2'
+
+    implementation 'org.hibernate.validator:hibernate-validator:8.0.0.Final'
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.0"
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events 'passed', 'skipped', 'failed'
+        exceptionFormat = 'full'
+    }
+    exclude '**/com/security/SecurityUserRegistrationApplication/**/*IntegrationTest*'
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            element = 'CLASS'
+            excludes = ['SecurityUserRegistrationApplication*']
+            limit {
+                minimum = 0.95
+            }
+            excludes = [
+                    'com.security.securityuserregistration.SecurityUserRegistrationApplication',
+                    'com.security.securityuserregistration.dto.**',
+                    'com.security.securityuserregistration.mapper.**',
+                    'com.security.securityuserregistration.model.**',
+                    'com.security.securityuserregistration.repository.**',
+                    'com.security.securityuserregistration.validation.**',
+                    'com.security.securityuserregistration.config.**',
+                    'com.security.securityuserregistration.exception.**',
+            ]
+        }
+    }
+
+}
+
+jacocoTestReport {
+    reports {
+        html.destination file('build/jacocoHtml')
+    }
+    afterEvaluate {
+        getClassDirectories().setFrom(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    '**/com/security/securityuserregistration/SecurityUserRegistrationApplication*',
+                    '**/com/security/securityuserregistration/dto/**',
+                    '**/com/security/securityuserregistration/mapper/**',
+                    '**/com/security/securityuserregistration/model/**',
+                    '**/com/security/securityuserregistration/repository/**',
+                    '**/com/security/securityuserregistration/validation/**',
+                    '**/com/security/securityuserregistration/config/**',
+                    '**/com/security/securityuserregistration/exception/**',
+            ])
+        })
+    }
+}

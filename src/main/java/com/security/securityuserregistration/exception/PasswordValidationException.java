@@ -1,0 +1,7 @@
+package com.security.securityuserregistration.exception;
+
+public class PasswordValidationException extends RuntimeException {
+	public PasswordValidationException(String message){
+        super(message);
+    }
+}
