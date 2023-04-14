@@ -12,6 +12,7 @@ Using postman you can test endpoints, this project uses H2 in memory database.
 - database: jdbc:h2:mem:user
 - user: h2
 - password: h2
+- To Run unit test, start command line and run this code (gradle test jacocoTestReport jacocoTestCoverageVerification) this command is not necessary install gradle because it has gradle on project, when command is completed you can go on project root folder to (build/jacocoHtml/index.html) to review coverage of code (unit test), actually is configured to test 0.95% of code.  
 ## Acknowledgements
 
 - [Spring Boot 3.0](https://spring.io/blog/2022/05/24/preparing-for-spring-boot-3-0)
