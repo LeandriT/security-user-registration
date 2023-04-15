@@ -27,14 +27,19 @@ public class User extends BaseModel implements Serializable {
 
     private String password;
 
-    private LocalDateTime lastLogin;
+    @Builder.Default()
+    @Column(updatable = false)
+    private LocalDateTime lastLogin = LocalDateTime.now();
 
     private String token;
     private String additionalToken;
 
     private boolean isActive = true;
-
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "user_id")
     private List<Phone> phones = new ArrayList<>();
+
+/*
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Phone> phones = new ArrayList<>();*/
 }

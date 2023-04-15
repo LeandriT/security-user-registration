@@ -4,6 +4,8 @@ import com.security.securityuserregistration.dto.request.UserRequest;
 import com.security.securityuserregistration.dto.response.UserResponse;
 import com.security.securityuserregistration.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +33,22 @@ public class UserController {
     )
     public ResponseEntity<UserResponse> update(@RequestParam UUID uuid, @RequestBody UserRequest userRequest) {
         return new ResponseEntity<>(userService.update(uuid, userRequest), HttpStatus.OK);
+    }
+
+    @GetMapping(
+            path = "/{uuid}",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<UserResponse> show(@PathVariable("uuid") UUID uuid) {
+        return new ResponseEntity<>(userService.show(uuid), HttpStatus.OK);
+    }
+
+    @GetMapping(
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Page<UserResponse>> index(Pageable pageable) {
+        return new ResponseEntity<>(userService.index(pageable), HttpStatus.OK);
     }
 
 }

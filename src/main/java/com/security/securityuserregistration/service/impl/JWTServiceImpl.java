@@ -15,7 +15,7 @@ import java.util.Map;
 @Service
 public class JWTServiceImpl implements JWTService {
     long EXPIRATION_DATE = 28_800_000;//8 hours
-    @Value("${spring.security.jwt.sign}")
+    @Value("${app.config.jwt-sign}")
     private String sign;
 
     @Override

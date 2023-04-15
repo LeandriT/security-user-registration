@@ -1,9 +1,10 @@
 app:
   name: spring boot application
+  config:
+    jwt-sign: ${JWT_SIGN:super-secret-sign}
+    email-pattern: ${EMAIL_PATTERN:\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b}
+    password-pattern: ${PASSWORD_PATTERN:^(?=.*[0-9])(?=.*[A-Z])(?=.*[^A-Za-z0-9]).{4,}}
 spring:
-  security:
-    jwt:
-      sign: super-secret-sign
   jackson:
     property-naming-strategy: SNAKE_CASE
   h2:
@@ -19,4 +20,3 @@ spring:
       ddl-auto: create-drop
     show-sql: 'true'
     database-platform: org.hibernate.dialect.H2Dialect
-
