@@ -205,17 +205,19 @@ class UserServiceImplTest {
     class UpdateUser {
         @Test
         void updateUserNotFoundError() {
+            String token="token";
             UserRequest userRequest = testData.userRequest();
             UUID userUuid = UUID.randomUUID();
             when(userRepository.findById(userUuid)).thenReturn(Optional.empty());
 
-            assertThrows(UserNotFoundException.class, () -> userService.update(userUuid, userRequest));
+            assertThrows(UserNotFoundException.class, () -> userService.update(userUuid, userRequest, token));
 
             verify(userRepository).findById(userUuid);
         }
 
         @Test
         void updateUserFound() {
+            String token = "token";
             UserRequest userRequest = testData.userRequest();
             UUID userUuid = UUID.randomUUID();
             User user = User.builder()
@@ -234,12 +236,14 @@ class UserServiceImplTest {
             when(userMapper.updateModel(userRequest, user)).thenReturn(user);
             when(userRepository.save(user)).thenReturn(user);
             when(userMapper.toDto(user)).thenReturn(userResponse);
+            when(jwtService.validateToken(any())).thenReturn("token");
 
-            UserResponse update = userService.update(userUuid, userRequest);
+            UserResponse update = userService.update(userUuid, userRequest, token);
 
             verify(userRepository).findById(userUuid);
             verify(userMapper).updateModel(userRequest, user);
             verify(userRepository).save(user);
+            verify(jwtService).validateToken(anyString());
             assertThat(update).isNotNull();
             assertThat(update.isActive()).isTrue();
         }

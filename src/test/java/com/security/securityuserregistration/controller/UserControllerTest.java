@@ -61,6 +61,7 @@ class UserControllerTest {
     @Test
     void updateUser() {
         UserRequest userRequest = testData.userRequest();
+        String token="token";
         UUID userUuid = UUID.randomUUID();
         List<PhoneRequest> phoneRequestList = new ArrayList<>() {{
             add(testData.phoneRequest());
@@ -68,13 +69,13 @@ class UserControllerTest {
         }};
         userRequest.setPhones(phoneRequestList);
         UserResponse userResponse = testData.userResponse();
-        when(userService.update(userUuid, userRequest)).thenReturn(userResponse);
+        when(userService.update(userUuid, userRequest, token)).thenReturn(userResponse);
 
-        ResponseEntity<UserResponse> response = userController.update(userUuid, userRequest);
+        ResponseEntity<UserResponse> response = userController.update(userUuid, userRequest, token);
 
         assertThat(response).isNotNull();
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        Mockito.verify(userService).update(userUuid, userRequest);
+        Mockito.verify(userService).update(userUuid, userRequest, token);
     }
 
     @Test

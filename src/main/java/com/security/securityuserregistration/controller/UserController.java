@@ -31,8 +31,12 @@ public class UserController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<UserResponse> update(@RequestParam UUID uuid, @RequestBody UserRequest userRequest) {
-        return new ResponseEntity<>(userService.update(uuid, userRequest), HttpStatus.OK);
+    public ResponseEntity<UserResponse> update(
+            @RequestParam UUID uuid,
+            @RequestBody UserRequest userRequest,
+            @RequestHeader(name = "token") String token
+    ) {
+        return new ResponseEntity<>(userService.update(uuid, userRequest, token), HttpStatus.OK);
     }
 
     @GetMapping(

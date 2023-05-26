@@ -70,7 +70,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse update(UUID uuid, UserRequest userRequest) {
+    public UserResponse update(UUID uuid, UserRequest userRequest, String token) {
+        jwtService.validateToken(token);
         User user = userRepository.findById(uuid).orElseThrow(() -> new UserNotFoundException(uuid));
         user = userMapper.updateModel(userRequest, user);
         userRepository.save(user);
