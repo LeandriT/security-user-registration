@@ -29,4 +29,13 @@ class JWTServiceImplTest {
 
         Assertions.assertThat(token).isNotNull();
     }
+
+    @Test
+    void testToken() {
+        String token = "eyJyb2xlcyI6W10sImFsZyI6IkhTMjU2IiwidHlwIjoiSldUIn0.eyJuYW1lIjoiSnVhbiBSb2RyaWd1ZXoiLCJpYXQiOjE2ODUwNjc5NTEsImV4cCI6MTY4NTA5Njc1MX0.BRqS9w7LkWv_LtCZ-P41xGBTX4NcbXsDa4RFVZG0Q4I";
+
+        String validateToken = jwtService.validateToken(token);
+
+        Assertions.assertThat(validateToken).isNotNull();
+    }
 }

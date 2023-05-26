@@ -13,7 +13,7 @@ public interface UserService {
 
     void validate(UserRequest userRequest);
 
-    UserResponse update(UUID uuid, UserRequest userRequest);
+    UserResponse update(UUID uuid, UserRequest userRequest, String token);
 
     UserResponse show(UUID uuid);
 
